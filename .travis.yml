@@ -1,0 +1,35 @@
+language: android
+jdk: oraclejdk8
+android:
+  components:
+    - tools
+    - tools
+    - platform-tools
+    - android-25
+    - build-tools-25.0.2
+    - extra-android-m2repository
+    - extra-android-support
+    - extra-google-m2repository
+before_cache:
+  - rm -f  "${HOME}/.gradle/caches/modules-2/modules-2.lock"
+  - rm -fr "${HOME}/.gradle/caches/*/plugin-resolution/"
+cache:
+  directories:
+    - "${HOME}/.gradle/caches/"
+    - "${HOME}/.gradle/wrapper/"
+script:
+  - ./gradlew build test
+env:
+  - MODULE_DIR=lib
+before_deploy:
+  - ./gradlew install
+  - curl -s https://raw.githubusercontent.com/realglobe-Inc/travis-deploy-scripts/master/gradle-prepare-files.sh | sh
+  - curl -s https://raw.githubusercontent.com/realglobe-Inc/travis-deploy-scripts/master/maven-generate-bintray-descriptor.sh | sh
+deploy:
+  provider: bintray
+  file: bintray.json
+  user: realglobe
+  key:
+    secure: mEomgIT5/NpsJL6czPcNQVkR5Mwp529b3c5vq8/EsT5MmG6cEzacdl4wUf/q1YElQo/qRcsQYl8tqfJPi/TwguyxCUMmNqb5z0ZDAILlf7yJl4qL8Rtxhwjqr4hMZ4bkzWIjkutuHK8sGSCx3a3U7eu3ZlL78X3rNo3eKI7lr/PSAA2fcSq/gX5OgWbsL3ZBW4aJcn4GIjBONNoSQrlWyMEuCcLgLjdcTy0wQiEr96mX6LRWEZ/sJgorhHen/fCFGKihSjHTlguKM4BpnlWzCJSHKQp6QbVj3XMkNmhEfkUcd8Nf8ZZNRixIWb3JdPJAddBJLdvFKv2V8OkFS4XC2toZ4PUbH43bA//hgPofb9I2HZKOGUw4F5qJsTTnPIpaAVApZpXF4OFU6ng5rlNgjvn0Fwqzb3wf6M4d82hIB1A4Cf4qgwU9cyxBQItOolsFBrLOK6O/Ll0rjuu2fMliBIKw3WTp01h6AJlKqi8gA/CoEe5owRB/aSEfJM8+yGAvV5v5G+DIkKMGCmQI3FMijWQ1nvDu1eCJQsYXyIV8TE5d3phtkVU+yCvXpk1sr29V3Nj+htU8NYlc6IQwmkuWKPOo85x77RwQBqpCXCwYoSot1o1Hmd2U72aBxYiQD7W+n1ZR5YflVKskDQ5VPVhsdo58Nkw/ptZ+0a6ABn1zuA4=
+after_deploy:
+  - curl -s https://raw.githubusercontent.com/realglobe-Inc/travis-deploy-scripts/master/maven-deploy-javadoc.sh | sh
