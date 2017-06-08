@@ -59,11 +59,11 @@ public class LogTest {
                 final String info = reader.readLine();
                 final String warn = reader.readLine();
                 final String error = reader.readLine();
-                Assert.assertTrue("No VERBOSE", verbose.contains("VERBOSE"));
-                Assert.assertTrue("No DEBUG", debug.contains("DEBUG"));
-                Assert.assertTrue("No INFO", info.contains("INFO"));
-                Assert.assertTrue("No WARN", warn.contains("WARN"));
-                Assert.assertTrue("No ERROR", error.contains("ERROR"));
+                Assert.assertTrue("No VERBOSE in " + verbose, verbose.contains("VERBOSE"));
+                Assert.assertTrue("No DEBUG in " + debug, debug.contains("DEBUG"));
+                Assert.assertTrue("No INFO in " + info, info.contains("INFO"));
+                Assert.assertTrue("No WARN in " + warn, warn.contains("WARN"));
+                Assert.assertTrue("No ERROR in " + error, error.contains("ERROR"));
             }
         } finally {
             file.delete();
