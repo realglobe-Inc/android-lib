@@ -2,8 +2,8 @@ language: android
 jdk: oraclejdk8
 android:
   components:
-    - tools
-    - tools
+    - tools # リポジトリの更新
+    - tools # 新しいリポジトリで SDK の更新
     - platform-tools
     - android-25
     - build-tools-25.0.2
