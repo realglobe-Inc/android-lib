@@ -61,4 +61,17 @@ public final class EditTextUtils {
         return Double.parseDouble(text);
     }
 
+    /**
+     * @param edit         入力欄
+     * @param defaultValue 入力欄が空だったときの値
+     * @return 入力されている文字列
+     */
+    static String getString(@NonNull EditText edit, String defaultValue) {
+        final String text = edit.getText().toString();
+        if (text.isEmpty()) {
+            return defaultValue;
+        }
+        return text;
+    }
+
 }
