@@ -38,7 +38,7 @@ public final class EditTextUtils {
     /**
      * @param edit         inputType が numberDecimal の入力欄
      * @param defaultValue 入力欄が空だったときの値
-     * @return 入力されている数値。未入力の場合は 0
+     * @return 入力されている数値
      */
     static float parseFloat(@NonNull EditText edit, float defaultValue) {
         final String text = edit.getText().toString();
@@ -51,7 +51,7 @@ public final class EditTextUtils {
     /**
      * @param edit         inputType が numberDecimal の入力欄
      * @param defaultValue 入力欄が空だったときの値
-     * @return 入力されている数値。未入力の場合は 0
+     * @return 入力されている数値
      */
     static double parseDouble(@NonNull EditText edit, double defaultValue) {
         final String text = edit.getText().toString();
