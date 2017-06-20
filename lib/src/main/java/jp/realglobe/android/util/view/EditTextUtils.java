@@ -23,6 +23,19 @@ public final class EditTextUtils {
     }
 
     /**
+     * @param edit         inputType が number の入力欄
+     * @param defaultValue 入力欄が空だったときの値
+     * @return 入力されている数値
+     */
+    static long parseLong(@NonNull EditText edit, long defaultValue) {
+        final String text = edit.getText().toString();
+        if (text.isEmpty()) {
+            return defaultValue;
+        }
+        return Long.parseLong(text);
+    }
+
+    /**
      * @param edit         inputType が numberDecimal の入力欄
      * @param defaultValue 入力欄が空だったときの値
      * @return 入力されている数値。未入力の場合は 0
@@ -33,6 +46,19 @@ public final class EditTextUtils {
             return defaultValue;
         }
         return Float.parseFloat(text);
+    }
+
+    /**
+     * @param edit         inputType が numberDecimal の入力欄
+     * @param defaultValue 入力欄が空だったときの値
+     * @return 入力されている数値。未入力の場合は 0
+     */
+    static double parseDouble(@NonNull EditText edit, double defaultValue) {
+        final String text = edit.getText().toString();
+        if (text.isEmpty()) {
+            return defaultValue;
+        }
+        return Double.parseDouble(text);
     }
 
 }
