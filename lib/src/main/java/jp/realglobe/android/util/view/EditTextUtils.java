@@ -66,7 +66,8 @@ public final class EditTextUtils {
      * @param defaultValue 入力欄が空だったときの値
      * @return 入力されている文字列
      */
-    public static String getString(@NonNull EditText edit, String defaultValue) {
+    @NonNull
+    public static String getString(@NonNull EditText edit, @NonNull String defaultValue) {
         final String text = edit.getText().toString();
         if (text.isEmpty()) {
             return defaultValue;
