@@ -14,7 +14,7 @@ public final class EditTextUtils {
      * @param defaultValue 入力欄が空だったときの値
      * @return 入力されている数値
      */
-    static int parseInt(@NonNull EditText edit, int defaultValue) {
+    public static int parseInt(@NonNull EditText edit, int defaultValue) {
         final String text = edit.getText().toString();
         if (text.isEmpty()) {
             return defaultValue;
@@ -27,7 +27,7 @@ public final class EditTextUtils {
      * @param defaultValue 入力欄が空だったときの値
      * @return 入力されている数値
      */
-    static long parseLong(@NonNull EditText edit, long defaultValue) {
+    public static long parseLong(@NonNull EditText edit, long defaultValue) {
         final String text = edit.getText().toString();
         if (text.isEmpty()) {
             return defaultValue;
@@ -40,7 +40,7 @@ public final class EditTextUtils {
      * @param defaultValue 入力欄が空だったときの値
      * @return 入力されている数値
      */
-    static float parseFloat(@NonNull EditText edit, float defaultValue) {
+    public static float parseFloat(@NonNull EditText edit, float defaultValue) {
         final String text = edit.getText().toString();
         if (text.isEmpty()) {
             return defaultValue;
@@ -53,7 +53,7 @@ public final class EditTextUtils {
      * @param defaultValue 入力欄が空だったときの値
      * @return 入力されている数値
      */
-    static double parseDouble(@NonNull EditText edit, double defaultValue) {
+    public static double parseDouble(@NonNull EditText edit, double defaultValue) {
         final String text = edit.getText().toString();
         if (text.isEmpty()) {
             return defaultValue;
@@ -66,7 +66,8 @@ public final class EditTextUtils {
      * @param defaultValue 入力欄が空だったときの値
      * @return 入力されている文字列
      */
-    static String getString(@NonNull EditText edit, String defaultValue) {
+    @NonNull
+    public static String getString(@NonNull EditText edit, @NonNull String defaultValue) {
         final String text = edit.getText().toString();
         if (text.isEmpty()) {
             return defaultValue;
