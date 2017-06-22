@@ -41,6 +41,9 @@ import jp.realglobe.lib.util.Dates;
  */
 public final class Log {
 
+    private Log() {
+    }
+
     private static final String TAG = Log.class.getName();
 
     private static final long TIMEOUT = 3;

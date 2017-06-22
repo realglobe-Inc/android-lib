@@ -9,6 +9,9 @@ import android.widget.EditText;
  */
 public final class EditTextUtils {
 
+    private EditTextUtils() {
+    }
+
     /**
      * @param edit         inputType が number の入力欄
      * @param defaultValue 入力欄が空だったときの値
