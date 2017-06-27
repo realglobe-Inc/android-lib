@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViewById(R.id.button_log).setOnClickListener((View v) -> startActivity(new Intent(this, LogActivity.class)));
         findViewById(R.id.button_edit_text_utils).setOnClickListener((View v) -> startActivity(new Intent(this, EditTextUtilsActivity.class)));
+        findViewById(R.id.button_preference_utils).setOnClickListener((View v) -> startActivity(new Intent(this, PreferenceUtilsActivity.class)));
     }
 
 }

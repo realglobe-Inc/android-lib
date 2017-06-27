@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Android Library</string>
+    <string name="button_delete">消去</string>
     <string name="button_edit_text_utils">EditTextUtilsのサンプル</string>
     <string name="button_log">Logのサンプル</string>
     <string name="button_parse">読み取り</string>
+    <string name="button_preference_utils">PreferenceUtilsのサンプル</string>
+    <string name="button_reload">再読み込み</string>
+    <string name="button_save">保存</string>
     <string name="button_set_log_file">決定</string>
     <string name="dummy_empty_string">空です</string>
     <string name="dummy_log_message">こんにちは</string>
@@ -20,4 +24,6 @@
     <string name="label_long">整数（倍長）</string>
     <string name="label_string">文字列</string>
     <string name="notification_permissions">実行に必要な権限がありません。システム設定から許可してください</string>
+    <string name="notification_preferences_delete">保存されているデータを削除しました</string>
+    <string name="notification_preferences_load">保存されているデータを読み込みました</string>
 </resources>
