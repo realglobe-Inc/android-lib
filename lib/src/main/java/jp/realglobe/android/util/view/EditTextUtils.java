@@ -83,10 +83,10 @@ public final class EditTextUtils {
     /**
      * @param edit         入力欄
      * @param defaultValue 入力欄が空だったときの値
-     * @return 入力されている文字列
+     * @return 入力されている文字列。空文字列が返るのは入力欄が空かつ defaultValue が空文字列の場合のみ
      */
     @NonNull
-    public static String getString(@NonNull EditText edit, @NonNull String defaultValue) {
+    public static String getNonEmptyString(@NonNull EditText edit, @NonNull String defaultValue) {
         final String text = edit.getText().toString();
         if (text.isEmpty()) {
             return defaultValue;
