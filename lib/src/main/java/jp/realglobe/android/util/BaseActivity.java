@@ -51,16 +51,21 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param onDenied    権限が拒否されたときに実行される関数
      * @return 権限確認コールバック
      */
-    protected static PermissionRequestCallback makePermissionRequestCallback(Runnable onPermitted, Consumer<String[]> onDenied) {
+    @NonNull
+    protected static PermissionRequestCallback makePermissionRequestCallback(@Nullable Runnable onPermitted, @Nullable Consumer<String[]> onDenied) {
         return new PermissionRequestCallback() {
             @Override
             public void onPermitted() {
-                onPermitted.run();
+                if (onPermitted != null) {
+                    onPermitted.run();
+                }
             }
 
             @Override
             public void onDenied(String[] denied) {
-                onDenied.accept(denied);
+                if (onDenied != null) {
+                    onDenied.accept(denied);
+                }
             }
         };
     }
