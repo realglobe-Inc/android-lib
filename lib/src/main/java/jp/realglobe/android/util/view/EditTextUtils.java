@@ -1,3 +1,19 @@
+/*----------------------------------------------------------------------
+ * Copyright 2017 realglobe Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *----------------------------------------------------------------------*/
+
 package jp.realglobe.android.util.view;
 
 import android.support.annotation.NonNull;
@@ -8,6 +24,9 @@ import android.widget.EditText;
  * Created by fukuchidaisuke on 17/06/20.
  */
 public final class EditTextUtils {
+
+    private EditTextUtils() {
+    }
 
     /**
      * @param edit         inputType が number の入力欄
@@ -64,10 +83,10 @@ public final class EditTextUtils {
     /**
      * @param edit         入力欄
      * @param defaultValue 入力欄が空だったときの値
-     * @return 入力されている文字列
+     * @return 入力されている文字列。空文字列が返るのは入力欄が空かつ defaultValue が空文字列の場合のみ
      */
     @NonNull
-    public static String getString(@NonNull EditText edit, @NonNull String defaultValue) {
+    public static String getNonEmptyString(@NonNull EditText edit, @NonNull String defaultValue) {
         final String text = edit.getText().toString();
         if (text.isEmpty()) {
             return defaultValue;
