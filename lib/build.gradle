@@ -95,7 +95,7 @@ task javadoc(type: Javadoc) {
 
     options {
         links('http://docs.oracle.com/javase/jp/8/docs/api/', 'https://developer.android.com/reference/');
-        setMemberLevel(JavadocMemberLevel.PUBLIC)
+        setMemberLevel(JavadocMemberLevel.PROTECTED)
         docEncoding = 'UTF-8'
         encoding = 'UTF-8'
         charSet = 'UTF-8'
