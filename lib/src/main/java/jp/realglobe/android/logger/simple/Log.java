@@ -173,7 +173,7 @@ public final class Log {
             return null;
         }
 
-        handler.sendMessage(handler.obtainMessage(WriteHandler.MSG_CLOSE));
+        handler.sendEmptyMessage(WriteHandler.MSG_CLOSE);
         return handler.getLooper();
     }
 
@@ -192,7 +192,7 @@ public final class Log {
         if (handler == null) {
             return;
         }
-        handler.sendMessage(handler.obtainMessage(WriteHandler.MSG_FLUSH));
+        handler.sendEmptyMessage(WriteHandler.MSG_FLUSH);
     }
 
     public static int v(String tag, String msg, Throwable tr) {
