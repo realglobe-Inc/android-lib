@@ -138,34 +138,55 @@ public final class Log {
         }
     }
 
-    private static Handler handler;
+    private static boolean ownLooper = false;
+    private static Handler handler = null;
+
+    /**
+     * setLogfile(file, null) と同じ
+     */
+    public static void setLogFile(@Nullable final File file) throws IOException {
+        setLogFile(file, null);
+    }
 
     /**
      * ログを出力するファイルを設定する。
      * 複数回呼んだ場合、最後の設定が有効になる
      *
-     * @param file ログファイル。
-     *             null の場合、ログはファイルに出力されない
+     * @param file   ログファイル。
+     *               null の場合、ログはファイルに出力されない
+     * @param looper 使うスレッド。
+     *               null の場合、勝手にスレッドをつくる
+     * @throws IOException ファイルエラー
      */
-    public static synchronized void setLogFile(@Nullable final File file) throws IOException {
-        Looper looper = stopWriting();
+    public static synchronized void setLogFile(@Nullable final File file, @Nullable Looper looper) throws IOException {
+        final Looper oldLooper = stopWriting();
 
         if (file == null) {
-            if (looper != null) {
-                looper.quitSafely();
+            if (oldLooper != null && ownLooper) {
+                oldLooper.quitSafely();
             }
+            ownLooper = false;
+            handler = null;
             return;
         } else if (file.getParentFile().mkdirs()) {
             i(TAG, "Log directory " + file.getParent() + " was generated");
         }
 
-        if (looper == null) {
+        final Looper newLooper;
+        if (looper != null) {
+            newLooper = looper;
+            ownLooper = false;
+        } else if (oldLooper != null) {
+            newLooper = oldLooper;
+            // ownLooper は変わらず
+        } else {
             final HandlerThread thread = new HandlerThread(Log.class.getName());
             thread.start();
-            looper = thread.getLooper();
+            newLooper = thread.getLooper();
+            ownLooper = true;
         }
 
-        handler = new WriteHandler(looper, file);
+        handler = new WriteHandler(newLooper, file);
     }
 
     private static Looper stopWriting() {
