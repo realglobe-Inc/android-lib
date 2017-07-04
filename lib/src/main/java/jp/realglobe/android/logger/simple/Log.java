@@ -20,6 +20,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -75,7 +77,7 @@ public final class Log {
         private final String msg;
         private final Throwable tr;
 
-        Entry(long date, int level, String tag, String msg, Throwable tr) {
+        Entry(long date, int level, @NonNull String tag, @Nullable String msg, @Nullable Throwable tr) {
             this.date = date;
             this.level = level;
             this.tag = tag;
@@ -106,7 +108,7 @@ public final class Log {
 
         private final Writer writer;
 
-        WriteHandler(Looper looper, File file) throws IOException {
+        WriteHandler(@NonNull Looper looper, @NonNull File file) throws IOException {
             super(looper);
 
             this.writer = new BufferedWriter(new FileWriter(file, true));
@@ -145,7 +147,7 @@ public final class Log {
      * @param file ログファイル。
      *             null の場合、ログはファイルに出力されない
      */
-    public static synchronized void setLogFile(final File file) throws IOException {
+    public static synchronized void setLogFile(@Nullable final File file) throws IOException {
         Looper looper = stopWriting();
 
         if (file == null) {
