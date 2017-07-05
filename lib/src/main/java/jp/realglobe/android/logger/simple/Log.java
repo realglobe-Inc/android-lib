@@ -16,20 +16,20 @@
 
 package jp.realglobe.android.logger.simple;
 
-import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import jp.realglobe.android.logger.util.LineWriter;
 import jp.realglobe.lib.util.Dates;
 
 /**
@@ -75,7 +75,7 @@ public final class Log {
         private final String msg;
         private final Throwable tr;
 
-        Entry(long date, int level, String tag, String msg, Throwable tr) {
+        Entry(long date, int level, @NonNull String tag, @Nullable String msg, @Nullable Throwable tr) {
             this.date = date;
             this.level = level;
             this.tag = tag;
@@ -98,88 +98,64 @@ public final class Log {
         }
     }
 
-    private static final class WriteHandler extends Handler {
+    private static boolean ownLooper = false;
+    private static Looper curLooper = null;
+    private static LineWriter writer = null;
 
-        static final int MSG_WRITE = 0;
-        static final int MSG_FLUSH = 1;
-        static final int MSG_CLOSE = 2;
-
-        private final Writer writer;
-
-        WriteHandler(Looper looper, File file) throws IOException {
-            super(looper);
-
-            this.writer = new BufferedWriter(new FileWriter(file, true));
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            try {
-                switch (msg.what) {
-                    case MSG_WRITE: {
-                        writer.write(msg.obj.toString());
-                        writer.write(System.lineSeparator());
-                        break;
-                    }
-                    case MSG_FLUSH: {
-                        writer.flush();
-                        break;
-                    }
-                    case MSG_CLOSE: {
-                        writer.close();
-                        break;
-                    }
-                }
-            } catch (IOException e) {
-                e(TAG, "Writing log entry failed", e);
-            }
-        }
+    /**
+     * setLogfile(file, null) と同じ
+     */
+    public static void setLogFile(@Nullable final File file) throws IOException {
+        setLogFile(file, null);
     }
-
-    private static Handler handler;
 
     /**
      * ログを出力するファイルを設定する。
      * 複数回呼んだ場合、最後の設定が有効になる
      *
-     * @param file ログファイル。
-     *             null の場合、ログはファイルに出力されない
+     * @param file   ログファイル。
+     *               null の場合、ログはファイルに出力されない
+     * @param looper 使うスレッド。
+     *               null の場合、勝手にスレッドをつくる
+     * @throws IOException ファイルエラー
      */
-    public static synchronized void setLogFile(final File file) throws IOException {
-        Looper looper = stopWriting();
+    public static synchronized void setLogFile(@Nullable final File file, @Nullable Looper looper) throws IOException {
+        stopWriting();
 
         if (file == null) {
-            if (looper != null) {
-                looper.quitSafely();
+            if (ownLooper && curLooper != null) {
+                curLooper.quitSafely();
             }
+            ownLooper = false;
+            curLooper = null;
             return;
         } else if (file.getParentFile().mkdirs()) {
             i(TAG, "Log directory " + file.getParent() + " was generated");
         }
 
-        if (looper == null) {
+        if (looper != null) {
+            if (ownLooper && curLooper != null) {
+                curLooper.quitSafely();
+            }
+            curLooper = looper;
+            ownLooper = false;
+        } else if (curLooper == null) {
             final HandlerThread thread = new HandlerThread(Log.class.getName());
             thread.start();
-            looper = thread.getLooper();
+            curLooper = thread.getLooper();
+            ownLooper = true;
         }
 
-        handler = new WriteHandler(looper, file);
+        writer = new LineWriter(curLooper, new BufferedWriter(new FileWriter(file)), null);
     }
 
-    private static Looper stopWriting() {
-        if (handler == null) {
-            return null;
-        }
-
-        handler.sendMessage(handler.obtainMessage(WriteHandler.MSG_CLOSE));
-        return handler.getLooper();
-    }
-
-    private static synchronized void sendEntry(Entry entry) {
-        if (handler == null) {
+    private static void stopWriting() {
+        if (writer == null) {
             return;
         }
-        handler.sendMessage(handler.obtainMessage(WriteHandler.MSG_WRITE, entry));
+
+        writer.close();
+        writer = null;
     }
 
     /**
@@ -187,10 +163,17 @@ public final class Log {
      * ただし、呼び出しが終了した時点での書き出し完了は保証しない
      */
     public static synchronized void flushLogFile() {
-        if (handler == null) {
+        if (writer == null) {
             return;
         }
-        handler.sendMessage(handler.obtainMessage(WriteHandler.MSG_FLUSH));
+        writer.flush();
+    }
+
+    private static synchronized void sendEntry(Entry entry) {
+        if (writer == null) {
+            return;
+        }
+        writer.write(entry);
     }
 
     public static int v(String tag, String msg, Throwable tr) {
