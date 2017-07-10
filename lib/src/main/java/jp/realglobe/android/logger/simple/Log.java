@@ -129,8 +129,11 @@ public final class Log {
             ownLooper = false;
             curLooper = null;
             return;
-        } else if (file.getParentFile().mkdirs()) {
-            i(TAG, "Log directory " + file.getParent() + " was generated");
+        }
+
+        final File parent = file.getParentFile();
+        if (parent != null && parent.mkdirs()) {
+            i(TAG, "Directory " + file.getParent() + " was made");
         }
 
         if (looper != null) {
