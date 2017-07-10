@@ -48,4 +48,10 @@
         android:layout_height="wrap_content"
         android:text="@string/button_base_activity" />
 
+    <Button
+        android:id="@+id/button_json_poster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_json_poster" />
+
 </LinearLayout>

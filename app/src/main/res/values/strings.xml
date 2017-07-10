@@ -46,4 +46,9 @@
     <string name="notification_permitted">許可されました</string>
     <string name="notification_preferences_delete">保存されているデータを削除しました</string>
     <string name="notification_preferences_load">保存されているデータを読み込みました</string>
+    <string name="button_json_poster">JsonPosterのサンプル</string>
+    <string name="post_url">POSTするURL</string>
+    <string name="post_json_object">POSTするJSONオブジェクト</string>
+    <string name="post">POST</string>
+    <string name="notification_error">エラーが発生しました: %s</string>
 </resources>
