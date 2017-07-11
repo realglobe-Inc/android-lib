@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_edit_text_utils).setOnClickListener((View v) -> startActivity(new Intent(this, EditTextUtilsActivity.class)));
         findViewById(R.id.button_preference_utils).setOnClickListener((View v) -> startActivity(new Intent(this, PreferenceUtilsActivity.class)));
         findViewById(R.id.button_base_activity).setOnClickListener((View v) -> startActivity(new Intent(this, BaseActivityActivity.class)));
+        findViewById(R.id.button_json_poster).setOnClickListener((View v) -> startActivity(new Intent(this, JsonPosterActivity.class)));
     }
 
 }

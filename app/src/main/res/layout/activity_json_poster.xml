@@ -20,38 +20,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="8dp"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="jp.realglobe.android.app.MainActivity">
+    tools:context="jp.realglobe.android.app.JsonPosterActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/edit_url"
+        android:text="@string/post_url" />
+
+    <EditText
+        android:id="@id/edit_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textUri" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/edit_json"
+        android:text="@string/post_json_object" />
+
+    <EditText
+        android:id="@id/edit_json"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine" />
 
     <Button
-        android:id="@+id/button_log"
+        android:id="@+id/button_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_log" />
-
-    <Button
-        android:id="@+id/button_edit_text_utils"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_edit_text_utils" />
-
-    <Button
-        android:id="@+id/button_preference_utils"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_preference_utils" />
-
-    <Button
-        android:id="@+id/button_base_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_base_activity" />
-
-    <Button
-        android:id="@+id/button_json_poster"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_json_poster" />
+        android:text="@string/post" />
 
 </LinearLayout>
