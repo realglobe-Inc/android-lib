@@ -31,6 +31,6 @@ public class BaseActivityActivity extends BaseActivity {
 
         final View button = findViewById(R.id.button_permission_check);
         button.setOnClickListener((View v) -> checkPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                makePermissionRequestCallback(() -> showToast(getString(R.string.notification_permitted)), (String[] denied) -> showToast(getString(R.string.notification_denied)))));
+                () -> showToast(getString(R.string.notification_permitted)), (String[] denied) -> showToast(getString(R.string.notification_denied))));
     }
 }
