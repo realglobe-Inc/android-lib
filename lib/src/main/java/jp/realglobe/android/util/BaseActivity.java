@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jp.realglobe.android.function.Consumer;
+
 /**
  * ちょっとした便利関数を追加したアクティビティ。
  * Created by fukuchidaisuke on 17/06/28.
@@ -39,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 権限確認用コールバック
      */
-    protected interface PermissionRequestCallback {
+    private interface Callback {
 
         /**
          * 権限が許可されたときに実行される
@@ -55,39 +57,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    // TODO Android Studio 3.0 からは java.util.function.Consumer が使えるっぽい
-    protected interface Consumer<T> {
-        void accept(T t);
-    }
-
-    /**
-     * コード中でクラスをつくらずに権限確認コールバックをつくるための関数
-     *
-     * @param onPermitted 権限が許可されたときに実行される関数
-     * @param onDenied    権限が拒否されたときに実行される関数
-     * @return 権限確認コールバック
-     */
-    @NonNull
-    protected static PermissionRequestCallback makePermissionRequestCallback(@Nullable Runnable onPermitted, @Nullable Consumer<String[]> onDenied) {
-        return new PermissionRequestCallback() {
-            @Override
-            public void onPermitted() {
-                if (onPermitted != null) {
-                    onPermitted.run();
-                }
-            }
-
-            @Override
-            public void onDenied(String[] denied) {
-                if (onDenied != null) {
-                    onDenied.accept(denied);
-                }
-            }
-        };
-    }
-
     private int requestCode;
-    private Map<Integer, PermissionRequestCallback> requestCallbacks;
+    private Map<Integer, Callback> requestCallbacks;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -102,28 +73,42 @@ public abstract class BaseActivity extends AppCompatActivity {
      * UI スレッドから呼ぶこと
      *
      * @param permissions 確認する権限
-     * @param callback    確認後に呼ばれる関数
+     * @param onPermitted 許可されたときに呼ばれる関数
+     * @param onDenied    拒否されたときに呼ばれる関数
      */
-    protected void checkPermission(@NonNull String[] permissions, @Nullable PermissionRequestCallback callback) {
+    protected void checkPermission(@NonNull String[] permissions, @Nullable Runnable onPermitted, @Nullable Consumer<String[]> onDenied) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            if (callback != null) {
-                callback.onPermitted();
+            if (onPermitted != null) {
+                onPermitted.run();
             }
             return;
         }
 
         int rc = this.requestCode++;
-        this.requestCallbacks.put(rc, callback);
+        this.requestCallbacks.put(rc, new Callback() {
+            @Override
+            public void onPermitted() {
+                if (onPermitted != null) {
+                    onPermitted.run();
+                }
+            }
+
+            @Override
+            public void onDenied(String[] denied) {
+                if (onDenied != null) {
+                    onDenied.accept(denied);
+                }
+            }
+        });
         ActivityCompat.requestPermissions(this, permissions, rc);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (!this.requestCallbacks.containsKey(requestCode)) {
+        final Callback callback = this.requestCallbacks.remove(requestCode);
+        if (callback == null) {
             return;
         }
-
-        final PermissionRequestCallback callback = this.requestCallbacks.remove(requestCode);
 
         final List<String> denied = new ArrayList<>();
         for (int i = 0; i < permissions.length; i++) {
@@ -133,15 +118,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             denied.add(permissions[i]);
         }
 
-        if (!denied.isEmpty()) {
-            if (callback != null) {
-                callback.onDenied(denied.toArray(new String[denied.size()]));
-            }
-            return;
-        }
-
-        if (callback != null) {
+        if (denied.isEmpty()) {
             callback.onPermitted();
+        } else {
+            callback.onDenied(denied.toArray(new String[denied.size()]));
         }
     }
 
