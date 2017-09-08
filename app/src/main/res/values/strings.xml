@@ -46,4 +46,6 @@
     <string name="notification_permitted">許可されました</string>
     <string name="notification_preferences_delete">保存されているデータを削除しました</string>
     <string name="notification_preferences_load">保存されているデータを読み込みました</string>
+    <string name="sample_base_dialog">BaseDialogのサンプル</string>
+    <string name="show">表示</string>
 </resources>

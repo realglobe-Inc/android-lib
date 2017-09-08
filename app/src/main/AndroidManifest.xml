@@ -38,6 +38,7 @@
         <activity android:name=".EditTextUtilsActivity" />
         <activity android:name=".PreferenceUtilsActivity" />
         <activity android:name=".BaseActivityActivity" />
+        <activity android:name=".BaseDialogActivity" />
     </application>
 
 </manifest>
