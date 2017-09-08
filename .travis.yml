@@ -6,7 +6,7 @@ android:
     - tools # 新しいリポジトリで SDK の更新
     - platform-tools
     - android-26
-    - build-tools-26.0.0
+    - build-tools-26.0.1
     - extra-android-m2repository
     - extra-android-support
     - extra-google-m2repository
