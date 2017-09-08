@@ -16,6 +16,7 @@
 
 package jp.realglobe.android.util;
 
+import android.app.DialogFragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -133,6 +134,18 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void showToast(@NonNull final String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * ダイアログを表示する
+     *
+     * @param dialog 表示するダイアログ
+     */
+    protected void showDialog(@NonNull DialogFragment dialog) {
+        if (isDestroyed()) {
+            return;
+        }
+        dialog.show(getFragmentManager(), "dialog");
     }
 
 }
