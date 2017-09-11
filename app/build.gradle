@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         applicationId "jp.realglobe.android.app"
@@ -34,6 +34,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile project(':lib')
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
 
@@ -41,6 +42,5 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
 }

@@ -3,14 +3,14 @@ apply plugin: 'me.tatarka.retrolambda'
 
 def artifactGroupId = 'jp.realglobe'
 def artifactArtifactId = 'android-lib'
-def artifactVersion = '4.0.0'
+def artifactVersion = '4.1.0'
 def artifactName = 'Realglobe Android Library'
 def artifactDescription = 'Miscellaneous library'
 def artifactUrl = "https://github.com/realglobe-Inc/${artifactArtifactId}"
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         minSdkVersion 19
