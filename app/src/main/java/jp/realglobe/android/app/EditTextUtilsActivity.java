@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
-import jp.realglobe.android.util.view.EditTextUtils;
+import jp.realglobe.android.util.view.EditTexts;
 
 public class EditTextUtilsActivity extends AppCompatActivity {
 
@@ -46,11 +46,11 @@ public class EditTextUtilsActivity extends AppCompatActivity {
 
         buttonParse.setOnClickListener((View v) -> {
             final DialogFragment dialog = Dialog.newInstance(
-                    EditTextUtils.parseInt(editInt, -9999),
-                    EditTextUtils.parseLong(editLong, -99999999L),
-                    EditTextUtils.parseFloat(editFloat, -0.9999F),
-                    EditTextUtils.parseDouble(editDouble, -0.99999999),
-                    EditTextUtils.getNonEmptyString(editString, getString(R.string.dummy_empty_string))
+                    EditTexts.parseInt(editInt, -9999),
+                    EditTexts.parseLong(editLong, -99999999L),
+                    EditTexts.parseFloat(editFloat, -0.9999F),
+                    EditTexts.parseDouble(editDouble, -0.99999999),
+                    EditTexts.getNonEmptyString(editString, getString(R.string.dummy_empty_string))
             );
             dialog.show(getFragmentManager(), "dialog");
         });

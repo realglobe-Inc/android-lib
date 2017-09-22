@@ -23,9 +23,9 @@ import android.widget.EditText;
  * EditText 周りの便利関数。
  * Created by fukuchidaisuke on 17/06/20.
  */
-public final class EditTextUtils {
+public final class EditTexts {
 
-    private EditTextUtils() {
+    private EditTexts() {
     }
 
     /**
