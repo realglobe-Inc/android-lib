@@ -16,10 +16,10 @@
 
 package jp.realglobe.android.app;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,18 +30,18 @@ import java.util.Locale;
 
 import jp.realglobe.android.util.view.EditTexts;
 
-public class EditTextUtilsActivity extends AppCompatActivity {
+public class EditTextUtilsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_text_utils);
 
-        final EditText editInt = (EditText) findViewById(R.id.edit_int);
-        final EditText editLong = (EditText) findViewById(R.id.edit_long);
-        final EditText editFloat = (EditText) findViewById(R.id.edit_float);
-        final EditText editDouble = (EditText) findViewById(R.id.edit_double);
-        final EditText editString = (EditText) findViewById(R.id.edit_string);
+        final EditText editInt = findViewById(R.id.edit_int);
+        final EditText editLong = findViewById(R.id.edit_long);
+        final EditText editFloat = findViewById(R.id.edit_float);
+        final EditText editDouble = findViewById(R.id.edit_double);
+        final EditText editString = findViewById(R.id.edit_string);
         final View buttonParse = findViewById(R.id.button_parse);
 
         buttonParse.setOnClickListener((View v) -> {

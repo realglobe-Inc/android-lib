@@ -17,13 +17,13 @@
 package jp.realglobe.android.app;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -33,7 +33,7 @@ import java.io.IOException;
 
 import jp.realglobe.android.logger.simple.Log;
 
-public class LogActivity extends AppCompatActivity {
+public class LogActivity extends Activity {
 
     private static final String TAG = LogActivity.class.getName();
 
@@ -50,9 +50,9 @@ public class LogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
 
-        final EditText editPath = (EditText) findViewById(R.id.edit_path);
+        final EditText editPath = findViewById(R.id.edit_path);
         final View buttonStart = findViewById(R.id.button_start);
-        final EditText editMessage = (EditText) findViewById(R.id.edit_message);
+        final EditText editMessage = findViewById(R.id.edit_message);
         final View buttonVerbose = findViewById(R.id.button_verbose);
         final View buttonDebug = findViewById(R.id.button_debug);
         final View buttonInfo = findViewById(R.id.button_info);
