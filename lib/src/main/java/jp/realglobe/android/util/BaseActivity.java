@@ -139,6 +139,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * メッセージを画面に表示する。
+     *
+     * @param resId メッセージのリソース ID
+     */
+    protected void showToast(int resId) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
+        } else {
+            runOnUiThread(() -> Toast.makeText(this, resId, Toast.LENGTH_LONG).show());
+        }
+    }
+
+    /**
      * ダイアログを表示する
      *
      * @param dialog 表示するダイアログ
