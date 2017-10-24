@@ -20,6 +20,7 @@ import android.app.DialogFragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -128,12 +129,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * メッセージを画面に重ねて表示する。
-     * UI スレッドから呼ぶこと
      *
      * @param message 表示するメッセージ
      */
     protected void showToast(@NonNull final String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        } else {
+            runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_LONG).show());
+        }
     }
 
     /**
