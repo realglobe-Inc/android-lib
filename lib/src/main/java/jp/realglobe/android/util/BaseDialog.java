@@ -17,6 +17,7 @@
 package jp.realglobe.android.util;
 
 import android.app.DialogFragment;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
@@ -32,7 +33,24 @@ public abstract class BaseDialog extends DialogFragment {
      * @param message メッセージ
      */
     protected void showToast(@NonNull String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        } else {
+            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show());
+        }
+    }
+
+    /**
+     * メッセージを画面に表示する
+     *
+     * @param resId メッセージのリソース ID
+     */
+    protected void showToast(int resId) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show();
+        } else {
+            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show());
+        }
     }
 
     /**

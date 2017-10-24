@@ -16,17 +16,17 @@
 
 package jp.realglobe.android.app;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import jp.realglobe.android.util.PreferenceUtils;
 
-public class PreferenceUtilsActivity extends AppCompatActivity {
+public class PreferenceUtilsActivity extends Activity {
 
     private static final String KEY_STRING = PreferenceUtilsActivity.class.getName() + ":string";
 
@@ -35,7 +35,7 @@ public class PreferenceUtilsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preference_utils);
 
-        final EditText editString = (EditText) findViewById(R.id.edit_string);
+        final EditText editString = findViewById(R.id.edit_string);
         final View buttonSave = findViewById(R.id.button_save);
         final View buttonDelete = findViewById(R.id.button_delete);
         final View buttonReload = findViewById(R.id.button_reload);

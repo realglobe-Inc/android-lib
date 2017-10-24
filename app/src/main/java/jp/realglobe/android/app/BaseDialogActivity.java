@@ -16,6 +16,7 @@
 
 package jp.realglobe.android.app;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ public class BaseDialogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_dialog);
 
-        findViewById(R.id.button_show).setOnClickListener((View v) -> showDialog(SampleDialog.newInstance()));
+        findViewById(R.id.item_1).setOnClickListener((View v) -> showDialog(SampleDialog.newInstance()));
     }
 
     public static class SampleDialog extends BaseDialog {
@@ -46,7 +47,14 @@ public class BaseDialogActivity extends BaseActivity {
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
             final View content = inflater.inflate(R.layout.dialog_sample, container);
 
-            content.findViewById(R.id.button_show).setOnClickListener((View v) -> showToast("メッセージが表示されていれば正常です"));
+            content.findViewById(R.id.item_1).setOnClickListener((View v) -> showToast("メインスレッドからです"));
+            content.findViewById(R.id.item_2).setOnClickListener((View v) -> (new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    showToast("バックグラウンドスレッドからです");
+                    return null;
+                }
+            }).execute());
 
             return content;
         }

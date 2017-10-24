@@ -20,8 +20,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context="jp.realglobe.android.app.BaseActivityActivity">
 
     <Button
@@ -29,5 +30,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_permission_check" />
+
+    <Button
+        android:id="@+id/show_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="メッセージ表示" />
+
+    <Button
+        android:id="@+id/show_toast_from_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="バックグラウンドスレッドからメッセージ表示" />
+
+    <Button
+        android:id="@+id/show_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ダイアログ表示" />
+
+    <Button
+        android:id="@+id/show_dialog_from_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="バックグラウンドからダイアログ表示" />
 
 </LinearLayout>
