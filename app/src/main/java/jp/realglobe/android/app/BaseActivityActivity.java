@@ -17,8 +17,13 @@
 package jp.realglobe.android.app;
 
 import android.Manifest;
+import android.app.DialogFragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import jp.realglobe.android.util.BaseActivity;
 
@@ -32,5 +37,35 @@ public class BaseActivityActivity extends BaseActivity {
         final View button = findViewById(R.id.button_permission_check);
         button.setOnClickListener((View v) -> checkPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 () -> showToast(getString(R.string.notification_permitted)), (String[] denied) -> showToast(getString(R.string.notification_denied))));
+        findViewById(R.id.show_toast).setOnClickListener((View v) -> showToast("メインスレッドからです"));
+        findViewById(R.id.show_toast_from_background).setOnClickListener((View v) -> (new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                showToast("バックグラウンドスレッドからです");
+                return null;
+            }
+        }).execute());
+        findViewById(R.id.show_dialog).setOnClickListener((View v) -> showDialog(SampleDialog.newInstance()));
+        findViewById(R.id.show_dialog_from_background).setOnClickListener((View v) -> (new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                showDialog(SampleDialog.newInstance());
+                return null;
+            }
+        }).execute());
     }
+
+    public static class SampleDialog extends DialogFragment {
+
+        public static SampleDialog newInstance() {
+            return new SampleDialog();
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+            return inflater.inflate(R.layout.dialog_sample, container);
+        }
+    }
+
 }
