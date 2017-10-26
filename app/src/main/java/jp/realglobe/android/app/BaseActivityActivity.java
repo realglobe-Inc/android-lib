@@ -18,8 +18,9 @@ package jp.realglobe.android.app;
 
 import android.Manifest;
 import android.app.DialogFragment;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,30 +30,30 @@ import jp.realglobe.android.util.BaseActivity;
 
 public class BaseActivityActivity extends BaseActivity {
 
+    private Handler backgroundHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_activity);
 
+        final HandlerThread thread = new HandlerThread(getClass().getName() + ":background");
+        thread.start();
+        this.backgroundHandler = new Handler(thread.getLooper());
+
         final View button = findViewById(R.id.button_permission_check);
         button.setOnClickListener((View v) -> checkPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 () -> showToast(getString(R.string.notification_permitted)), (String[] denied) -> showToast(getString(R.string.notification_denied))));
         findViewById(R.id.show_toast).setOnClickListener((View v) -> showToast("メインスレッドからです"));
-        findViewById(R.id.show_toast_from_background).setOnClickListener((View v) -> (new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                showToast("バックグラウンドスレッドからです");
-                return null;
-            }
-        }).execute());
+        findViewById(R.id.show_toast_from_background).setOnClickListener((View v) -> this.backgroundHandler.post(() -> showToast("バックグラウンドスレッドからです")));
         findViewById(R.id.show_dialog).setOnClickListener((View v) -> showDialog(SampleDialog.newInstance()));
-        findViewById(R.id.show_dialog_from_background).setOnClickListener((View v) -> (new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                showDialog(SampleDialog.newInstance());
-                return null;
-            }
-        }).execute());
+        findViewById(R.id.show_dialog_from_background).setOnClickListener((View v) -> this.backgroundHandler.post(() -> showDialog(SampleDialog.newInstance())));
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.backgroundHandler.getLooper().quit();
+        super.onDestroy();
     }
 
     public static class SampleDialog extends DialogFragment {

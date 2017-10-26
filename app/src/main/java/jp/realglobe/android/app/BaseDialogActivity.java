@@ -16,8 +16,9 @@
 
 package jp.realglobe.android.app;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,8 @@ public class BaseDialogActivity extends BaseActivity {
 
     public static class SampleDialog extends BaseDialog {
 
+        private Handler backgroundHandler;
+
         public static SampleDialog newInstance() {
             return new SampleDialog();
         }
@@ -47,17 +50,22 @@ public class BaseDialogActivity extends BaseActivity {
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
             final View content = inflater.inflate(R.layout.dialog_sample, container);
 
+            final HandlerThread thread = new HandlerThread(getClass().getName() + ":background");
+            thread.start();
+            this.backgroundHandler = new Handler(thread.getLooper());
+
             content.findViewById(R.id.item_1).setOnClickListener((View v) -> showToast("メインスレッドからです"));
-            content.findViewById(R.id.item_2).setOnClickListener((View v) -> (new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... params) {
-                    showToast("バックグラウンドスレッドからです");
-                    return null;
-                }
-            }).execute());
+            content.findViewById(R.id.item_2).setOnClickListener((View v) -> this.backgroundHandler.post(() -> showToast("バックグラウンドスレッドからです")));
 
             return content;
         }
+
+        @Override
+        public void onDestroyView() {
+            this.backgroundHandler.getLooper().quit();
+            super.onDestroyView();
+        }
+
     }
 
 }
