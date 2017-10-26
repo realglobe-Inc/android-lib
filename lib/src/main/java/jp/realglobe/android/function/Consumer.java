@@ -17,7 +17,7 @@
 package jp.realglobe.android.function;
 
 /**
- * TODO Android Studio 3.0 からは java.util.function.Consumer が使えるらしい。
+ * Android Studio 3.0 からは java.util.function が使えるが、SDK 24 以上だけなので。
  * Created by fukuchidaisuke on 17/07/05.
  */
 public interface Consumer<T> {
