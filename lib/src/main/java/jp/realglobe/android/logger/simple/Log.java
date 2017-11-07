@@ -149,7 +149,7 @@ public final class Log {
             ownLooper = true;
         }
 
-        writer = new LineWriter(curLooper, new BufferedWriter(new FileWriter(file)), null);
+        writer = new LineWriter(curLooper, new BufferedWriter(new FileWriter(file, true)), null);
     }
 
     private static void stopWriting() {
