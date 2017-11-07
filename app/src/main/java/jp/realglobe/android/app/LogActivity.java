@@ -65,7 +65,6 @@ public class LogActivity extends Activity {
 
         buttonStart.setOnClickListener((View v) -> {
             this.file = new File(editPath.getText().toString());
-            this.file.delete();
             try {
                 Log.setLogFile(this.file);
                 Toast.makeText(this, file + "への出力を開始します", Toast.LENGTH_LONG).show();
