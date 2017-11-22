@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
@@ -32,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 
 import jp.realglobe.android.logger.simple.Log;
+import jp.realglobe.android.logger.util.LogFiles;
 
 public class LogActivity extends Activity {
 
@@ -60,7 +60,7 @@ public class LogActivity extends Activity {
         final View buttonError = findViewById(R.id.button_error);
         final View buttonAssert = findViewById(R.id.button_assert);
 
-        editPath.setText((new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), getClass().getSimpleName() + ".log")).getAbsolutePath());
+        editPath.setText(LogFiles.getLogFile(getApplicationContext(), getClass().getName(), "log").toString());
         editMessage.setText(R.string.dummy_log_message);
 
         buttonStart.setOnClickListener((View v) -> {
@@ -102,9 +102,6 @@ public class LogActivity extends Activity {
     @Override
     protected void onPause() {
         Log.flushLogFile();
-        if (this.file != null) {
-            this.file.setReadable(true, false);
-        }
         super.onPause();
     }
 
