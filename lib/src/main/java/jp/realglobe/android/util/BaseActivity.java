@@ -16,13 +16,13 @@
 
 package jp.realglobe.android.util;
 
-import android.app.DialogFragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -160,7 +160,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isDestroyed()) {
             return;
         }
-        dialog.show(getFragmentManager(), "dialog");
+        dialog.show(getSupportFragmentManager(), "dialog");
     }
 
 }

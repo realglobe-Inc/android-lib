@@ -16,9 +16,10 @@
 
 package jp.realglobe.android.util;
 
-import android.app.DialogFragment;
+import android.app.Activity;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 /**
@@ -34,9 +35,9 @@ public abstract class BaseDialog extends DialogFragment {
      */
     protected void showToast(@NonNull String message) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
         } else {
-            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show());
+            requireActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show());
         }
     }
 
@@ -47,9 +48,9 @@ public abstract class BaseDialog extends DialogFragment {
      */
     protected void showToast(int resId) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show();
+            Toast.makeText(requireContext(), resId, Toast.LENGTH_LONG).show();
         } else {
-            getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show());
+            requireActivity().runOnUiThread(() -> Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show());
         }
     }
 
@@ -59,10 +60,11 @@ public abstract class BaseDialog extends DialogFragment {
      * @param dialog 表示するダイアログ
      */
     protected void showDialog(@NonNull DialogFragment dialog) {
-        if (getActivity().isDestroyed()) {
+        final Activity activity = getActivity();
+        if (activity == null || activity.isDestroyed()) {
             return;
         }
-        dialog.show(getFragmentManager(), "dialog");
+        dialog.show(requireFragmentManager(), "dialog");
     }
 
 }
