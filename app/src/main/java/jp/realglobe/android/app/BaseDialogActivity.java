@@ -19,6 +19,7 @@ package jp.realglobe.android.app;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class BaseDialogActivity extends BaseActivity {
 
         @Nullable
         @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
             final View content = inflater.inflate(R.layout.dialog_sample, container);
 
             final HandlerThread thread = new HandlerThread(getClass().getName() + ":background");
