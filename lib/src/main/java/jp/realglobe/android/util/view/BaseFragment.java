@@ -1,6 +1,5 @@
 package jp.realglobe.android.util.view;
 
-import android.app.Activity;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -22,7 +21,7 @@ public abstract class BaseFragment extends Fragment {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
         } else {
-            requireActivity().runOnUiThread(() -> Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show());
+            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show());
         }
     }
 
@@ -35,7 +34,7 @@ public abstract class BaseFragment extends Fragment {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             Toast.makeText(requireContext(), resId, Toast.LENGTH_LONG).show();
         } else {
-            requireActivity().runOnUiThread(() -> Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show());
+            requireActivity().runOnUiThread(() -> Toast.makeText(requireContext(), resId, Toast.LENGTH_LONG).show());
         }
     }
 
@@ -45,10 +44,6 @@ public abstract class BaseFragment extends Fragment {
      * @param dialog 表示するダイアログ
      */
     protected void showDialog(@NonNull DialogFragment dialog) {
-        final Activity activity = getActivity();
-        if (activity == null || activity.isDestroyed()) {
-            return;
-        }
         dialog.show(requireFragmentManager(), "dialog");
     }
 
