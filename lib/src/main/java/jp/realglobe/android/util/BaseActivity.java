@@ -157,9 +157,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param dialog 表示するダイアログ
      */
     protected void showDialog(@NonNull DialogFragment dialog) {
-        if (isDestroyed()) {
-            return;
-        }
         dialog.show(getSupportFragmentManager(), "dialog");
     }
 
