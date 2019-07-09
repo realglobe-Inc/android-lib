@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 def artifactGroupId = 'jp.realglobe'
 def artifactArtifactId = 'android-lib'
-def artifactVersion = '6.0.1'
+def artifactVersion = '6.0.2'
 def artifactName = 'Realglobe Android Library'
 def artifactDescription = 'Miscellaneous library'
 def artifactUrl = "https://github.com/realglobe-Inc/${artifactArtifactId}"
