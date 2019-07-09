@@ -43,7 +43,7 @@ public class BaseDialogActivity extends BaseActivity {
 
         private Handler backgroundHandler;
 
-        public static SampleDialog newInstance() {
+        static SampleDialog newInstance() {
             return new SampleDialog();
         }
 

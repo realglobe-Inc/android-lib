@@ -60,7 +60,7 @@ public class BaseActivityActivity extends BaseActivity {
 
     public static class SampleDialog extends DialogFragment {
 
-        public static SampleDialog newInstance() {
+        static SampleDialog newInstance() {
             return new SampleDialog();
         }
 
