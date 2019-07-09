@@ -17,9 +17,10 @@
 package jp.realglobe.android.util;
 
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 /**
  * ダイアログの基礎クラス。
