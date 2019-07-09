@@ -18,8 +18,9 @@ package jp.realglobe.android.logger.util;
 
 import android.content.Context;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.util.Date;

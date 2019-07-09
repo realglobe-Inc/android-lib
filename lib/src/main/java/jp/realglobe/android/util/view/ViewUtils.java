@@ -16,9 +16,10 @@
 
 package jp.realglobe.android.util.view;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 
 /**
  * View 周りの便利関数。

@@ -17,7 +17,9 @@
 package jp.realglobe.android.util;
 
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
+
 
 /**
  * 設定周りの便利関数。

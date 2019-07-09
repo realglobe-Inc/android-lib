@@ -18,16 +18,16 @@ package jp.realglobe.android.logger.simple;
 
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.util.SparseArray;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import jp.realglobe.android.logger.util.LineWriter;
 import jp.realglobe.lib.util.Dates;
@@ -48,7 +48,7 @@ public final class Log {
         private static final String[] levelToLabel;
 
         static {
-            final Map<Integer, String> map = new HashMap<>();
+            final SparseArray<String> map = new SparseArray<>();
             map.put(android.util.Log.VERBOSE, "VERBOSE");
             map.put(android.util.Log.DEBUG, "DEBUG");
             map.put(android.util.Log.INFO, "INFO");
@@ -57,15 +57,16 @@ public final class Log {
             map.put(android.util.Log.ASSERT, "ASSERT");
 
             int max = 0;
-            for (int n : map.keySet()) {
-                if (n > max) {
-                    max = n;
+            for (int i = 0; i < map.size(); i++) {
+                final int key = map.keyAt(i);
+                if (key > max) {
+                    max = key;
                 }
             }
 
             levelToLabel = new String[max + 1];
-            for (Map.Entry<Integer, String> entry : map.entrySet()) {
-                levelToLabel[entry.getKey()] = entry.getValue();
+            for (int i = 0; i < map.size(); i++) {
+                levelToLabel[map.keyAt(i)] = map.valueAt(i);
             }
         }
 

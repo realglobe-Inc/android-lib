@@ -16,8 +16,9 @@
 
 package jp.realglobe.android.util.view;
 
-import android.support.annotation.NonNull;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 /**
  * EditText 周りの便利関数。
