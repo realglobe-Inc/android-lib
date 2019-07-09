@@ -20,6 +20,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.SparseArray;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,9 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import jp.realglobe.android.function.Consumer;
 
@@ -60,14 +59,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private int requestCode;
-    private Map<Integer, Callback> requestCallbacks;
+    private SparseArray<Callback> requestCallbacks;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         this.requestCode = 0;
-        this.requestCallbacks = new HashMap<>();
+        this.requestCallbacks = new SparseArray<>();
     }
 
     /**
@@ -106,10 +105,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        final Callback callback = this.requestCallbacks.remove(requestCode);
+        final Callback callback = this.requestCallbacks.get(requestCode);
         if (callback == null) {
             return;
         }
+        this.requestCallbacks.remove(requestCode);
 
         final List<String> denied = new ArrayList<>();
         for (int i = 0; i < permissions.length; i++) {
