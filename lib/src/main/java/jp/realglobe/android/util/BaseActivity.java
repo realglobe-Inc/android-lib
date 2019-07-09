@@ -122,7 +122,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (denied.isEmpty()) {
             callback.onPermitted();
         } else {
-            callback.onDenied(denied.toArray(new String[denied.size()]));
+            callback.onDenied(denied.toArray(new String[0]));
         }
     }
 
